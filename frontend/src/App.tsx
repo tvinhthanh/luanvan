@@ -16,6 +16,12 @@ import Detail from "./pages/Detail";
 import Booking from "./pages/Booking";
 import MyBookings from "./pages/MyBookings";
 import Home from "./pages/Home";
+import ManagerUser from "./pages/ManagerUser";
+import ManagerBookingOfMyHotel from "./pages/ManagerBookingOfMyHotel";
+import ManagerOwner from "./pages/ManagerOwner";
+import ManagerPet from "./pages/ManagerPet";
+import Pet from "./pages/Pet";
+import ManagerBreed from "./pages/ManagerBreed";
 
 const App = () => {
   const { isLoggedIn } = useAppContext();
@@ -99,15 +105,17 @@ const App = () => {
               }
             />
             <Route
-              path="/my-bookings"
-              element={
-                <Layout>
-                  <MyBookings />
-                </Layout>
-              }
+              path="/my-bookings" element={<Layout> <MyBookings /></Layout>}
             />
           </>
         )}
+        <Route path="/manager-user" element={  <Layout> <ManagerUser /></Layout>}/>
+        <Route path="/manager-owner" element={  <Layout> <ManagerOwner /></Layout>}/>
+        <Route path="/manager-pet" element={  <Layout> <ManagerPet /></Layout>}/>
+        <Route path="/pet" element={  <Layout> <Pet /></Layout>}/>       
+        <Route path="/manager-breed" element={  <Layout> <ManagerBreed /></Layout>}/>
+
+        <Route path="/manager-my-hotel-booking" element={<Layout><ManagerBookingOfMyHotel /></Layout>}/>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

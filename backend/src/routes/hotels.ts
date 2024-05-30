@@ -4,11 +4,14 @@ import { BookingType, HotelSearchResponse } from "../shared/types";
 import { param, validationResult } from "express-validator";
 import Stripe from "stripe";
 import verifyToken from "../middleware/auth";
+import { createHotels, deleteHotel, getAllHotels, updateHotel } from "../controller/hotelController";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 
 const router = express.Router();
 
+
+//tìm kiếm khách sạn
 router.get("/search", async (req: Request, res: Response) => {
   try {
     const query = constructSearchQuery(req.query);
@@ -55,6 +58,7 @@ router.get("/search", async (req: Request, res: Response) => {
   }
 });
 
+//lấy info khách sạn và hiển thị sắp xếp theo ngày
 router.get("/", async (req: Request, res: Response) => {
   try {
     const hotels = await Hotel.find().sort("-lastUpdated");
@@ -65,6 +69,7 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
+//lấy thông tin chi tiết khách sạn
 router.get(
   "/:id",
   [param("id").notEmpty().withMessage("Hotel ID is required")],
@@ -85,7 +90,7 @@ router.get(
     }
   }
 );
-
+//Tạo Ý Định Thanh Toán
 router.post(
   "/:hotelId/bookings/payment-intent",
   verifyToken,
@@ -123,6 +128,7 @@ router.post(
   }
 );
 
+//đặt phòng
 router.post(
   "/:hotelId/bookings",
   verifyToken,
@@ -176,6 +182,8 @@ router.post(
   }
 );
 
+
+//search
 const constructSearchQuery = (queryParams: any) => {
   let constructedQuery: any = {};
 

@@ -29,11 +29,22 @@ type Props = {
 };
 
 const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
-  const formMethods = useForm<HotelFormData>();
+  const formMethods = useForm<HotelFormData>({
+    defaultValues: {
+      facilities: [],
+      imageUrls: [],
+      imageFiles: [] as unknown as FileList,
+    }
+  });
   const { handleSubmit, reset } = formMethods;
 
   useEffect(() => {
-    reset(hotel);
+    reset({
+      ...hotel,
+      facilities: hotel?.facilities || [],
+      imageUrls: hotel?.imageUrls || [],
+      imageFiles: [] as unknown as FileList, // Initialize with an empty FileList
+    });
   }, [hotel, reset]);
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
@@ -55,11 +66,9 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
       formData.append(`facilities[${index}]`, facility);
     });
 
-    if (formDataJson.imageUrls) {
-      formDataJson.imageUrls.forEach((url, index) => {
-        formData.append(`imageUrls[${index}]`, url);
-      });
-    }
+    formDataJson.imageUrls.forEach((url, index) => {
+      formData.append(`imageUrls[${index}]`, url);
+    });
 
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append(`imageFiles`, imageFile);

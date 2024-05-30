@@ -36,7 +36,15 @@ export type BookingType = {
   checkOut: Date;
   totalCost: number;
 };
-
+export type OwnerType = {
+  _id: String;
+    name: String;
+    email: String;
+    pass: String;
+    phone: String;
+    role: Number;
+    img: String;
+}
 export type HotelSearchResponse = {
   data: HotelType[];
   pagination: {
@@ -51,3 +59,27 @@ export type PaymentIntentResponse = {
   clientSecret: string;
   totalCost: number;
 };
+
+export type PetType ={
+  _id: String;
+    name: String;
+    age: String;
+    weigh: String;
+    breed_id: String;
+    owner_id: String;
+    sex: String;
+    breed_type: String;
+    img: String;
+}
+export interface Pet {
+  _id: string;
+  name: string;
+  type: string;
+  age: string;
+  weigh: string;
+  breed_id: string;
+  owner_id: string;
+  sex: string;
+  breed_type: string;
+  img: string;
+}

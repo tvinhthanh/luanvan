@@ -8,7 +8,7 @@ const EditHotel = () => {
   const { hotelId } = useParams();
   const { showToast } = useAppContext();
 
-  const { data: hotel } = useQuery(
+  const { data: hotel, error } = useQuery(
     "fetchMyHotelById",
     () => apiClient.fetchMyHotelById(hotelId || ""),
     {
@@ -16,7 +16,8 @@ const EditHotel = () => {
     }
   );
 
-  const { mutate, isLoading } = useMutation(apiClient.updateMyHotelById, {
+  const { mutate, isLoading } = useMutation(
+    (HotelFormData:FormData)=>apiClient.updateMyHotelById(HotelFormData), {
     onSuccess: () => {
       showToast({ message: "Hotel Saved!", type: "SUCCESS" });
     },

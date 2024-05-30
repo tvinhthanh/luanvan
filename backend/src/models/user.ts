@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { UserType } from "../shared/types";
+import { Router } from "express";
+
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },

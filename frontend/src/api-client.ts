@@ -4,6 +4,7 @@ import {
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
+  Pet,
   UserType,
 } from "../../backend/src/shared/types";
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
@@ -77,7 +78,7 @@ export const signOut = async () => {
 };
 
 export const addMyHotel = async (hotelFormData: FormData) => {
-  const response = await fetch(`${API_BASE_URL}/api/my-hotels`, {
+  const response = await fetch(`${API_BASE_URL}/api/my-hotels/create-hotel`, {
     method: "POST",
     credentials: "include",
     body: hotelFormData,
@@ -242,6 +243,212 @@ export const fetchMyBookings = async (): Promise<HotelType[]> => {
 
   if (!response.ok) {
     throw new Error("Unable to fetch bookings");
+  }
+
+  return response.json();
+};
+export const fetchUsers = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/users`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch users");
+  }
+
+  return response.json();
+};
+
+export const createUser = async (userData: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/users`, {
+    method: "POST",
+    credentials: "include",
+    body: userData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create user");
+  }
+
+  return response.json();
+};
+
+export const updateUser = async (userId: string, userData: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
+    method: "PUT",
+    credentials: "include",
+    body: userData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update user");
+  }
+
+  return response.json();
+};
+
+export const deleteUser = async (userId: string) => {
+  const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete user");
+  }
+
+  return response.json();
+};
+
+//owners
+export const fetchOwner = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/owner`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch owners");
+  }
+
+  return response.json();
+};
+
+export const createOwner = async (ownerData: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/owner`, {
+    method: "POST",
+    credentials: "include",
+    body: ownerData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create owner");
+  }
+
+  return response.json();
+};
+
+export const updateOwner = async (ownerId: string, ownerData: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/owner/${ownerId}`, {
+    method: "PUT",
+    credentials: "include",
+    body: ownerData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update user");
+  }
+
+  return response.json();
+};
+
+export const deleteOwner = async (ownerId: string) => {
+  const response = await fetch(`${API_BASE_URL}/api/owner/${ownerId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete owner");
+  }
+
+  return response.json();
+};
+export const fetchBookings = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/bookings`, {
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch bookings");
+  }
+  return response.json();
+};
+
+export const deleteBooking = async (bookingId: string) => {
+  const response = await fetch(`${API_BASE_URL}/api/bookings/${bookingId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to delete booking");
+  }
+  return response.json();
+};
+
+export const createPet = async (petData: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/pet`, {
+    method: "POST",
+    credentials: "include",
+    body: petData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create pet");
+  }
+
+  return response.json();
+};
+
+export const updatePet = async (petId: string, petData: FormData) => {
+  const response = await fetch(`${API_BASE_URL}/api/pet/${petId}`, {
+    method: "PUT",
+    credentials: "include",
+    body: petData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update pet");
+  }
+
+  return response.json();
+};
+export const fetchpet = async (): Promise<Pet[]> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/pet`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch pet");
+    }
+    const data = await response.json();
+    return data as Pet[]; // Đảm bảo rằng dữ liệu được trả về là một mảng của các đối tượng Pet
+  } catch (error) {
+    throw new Error("Failed to fetch pet"); // Xử lý lỗi nếu cần thiết
+  }
+};
+export const fetchpet1 = async (petId: string) => {
+  const response = await fetch(`${API_BASE_URL}/api/pet/${petId}`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch pet");
+  }
+
+  return response.json();
+};
+export const deletePet = async (petId: string) => {
+  const response = await fetch(`${API_BASE_URL}/api/pet/${petId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete pet");
+  }
+
+  return response.json();
+};
+
+export const searchPet = async (searchParams: any) => {
+  const queryParams = new URLSearchParams();
+  // Thêm các tham số tìm kiếm vào queryParams
+
+  const response = await fetch(`${API_BASE_URL}/api/pet/search?${queryParams.toString()}`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to search pet");
   }
 
   return response.json();

@@ -5,6 +5,7 @@ import Hotel from "../models/hotel";
 import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
 import { HotelType } from "../shared/types";
+import { getAllHotels, createHotels, deleteHotel, updateHotel } from "../controller/hotelController";
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ const upload = multer({
 });
 
 router.post(
-  "/",
+  "/create-hotel",
   verifyToken,
   [
     body("name").notEmpty().withMessage("Name is required"),
@@ -128,5 +129,7 @@ async function uploadImages(imageFiles: Express.Multer.File[]) {
   const imageUrls = await Promise.all(uploadPromises);
   return imageUrls;
 }
+
+
 
 export default router;
